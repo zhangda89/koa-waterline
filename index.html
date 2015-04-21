@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Koa-waterline by ptariche</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Koa-waterline</h1>
+          <h2>a middelware for your hose</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/ptariche/koa-waterline/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/ptariche/koa-waterline/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/ptariche/koa-waterline" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a id="koa-waterline" class="anchor" href="#koa-waterline" aria-hidden="true"><span class="octicon octicon-link"></span></a>koa-waterline</h1>
+
+<p>Middleware for your hose 
+  <a href="https://npmjs.org/package/koa-waterline"><img src="https://img.shields.io/npm/v/koa-waterline.svg?style=flat-square" alt="NPM version"></a></p>
+
+<pre><code>npm install koa-waterline
+</code></pre>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+
+<pre><code>//see example.js
+
+function* (){
+  var ctx            = this;
+  var message        = 'This is an example';
+  var commentCreated = yield ctx._waterline.collections.comments.create({message: message});
+  // You can yield to the CRUD waterline functions because they are written as promises.
+  console.log(commentCreated);
+}
+</code></pre>
+
+<ul>
+<li>The model attributes of connection and adp must match the connection and adapter naming conventions when setting up your environment to inject into the middleware.</li>
+</ul>
+
+<h2>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example</h2>
+
+<pre><code>var connections= {
+  couch: {
+    adapter: "couch",
+    host: '127.0.0.1',
+    port: '5984',
+    username: '',
+    password: ''
+  },
+  mongo: {
+    adapter: "mongo",
+    host: 'localhost',
+    port: '27017', 
+    user: '', 
+    password: '',
+    database: 'waterline'
+  }
+};
+
+var adapters= {
+  couch: require('sails-couchdb-orm'),
+  mongo: require('sails-mongo')
+}; 
+
+var models = { 
+  "models": {
+    "comments": {
+      "adp": "couch",
+      "connection": "couch",
+      "properties": {
+        "archived": {
+            "type": "boolean",
+            "defaultValue": false
+        },
+        "message": {
+            "type": "string"
+        }
+      }
+    },
+    "history": {
+      "adp": "mongo",
+      "connection": "mongo",
+      "properties": {
+        "activity_id": {
+          "type": "number",
+          "enum": [
+              "unique"
+          ]
+        }
+      }
+    }
+  }
+};
+
+var injection               = {};
+injection.methods           = false;
+injection.models            = models; 
+injection.adapters          = adapters;
+injection.connections       = connections
+
+app.use(waterline(injection));
+</code></pre>
+
+<h2>
+<a id="attributes" class="anchor" href="#attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Attributes</h2>
+
+<p><em>Models</em> - Required</p>
+
+<pre><code>- Models must have an adp, connection, and the properties attributes with the same design pattern in the example above. 
+</code></pre>
+
+<p><em>Adapters</em> - Required</p>
+
+<pre><code>- The adapters refer to the connection adapters; this is required and while seeming redundant it is required to run waterline 
+</code></pre>
+
+<p><em>Connections</em> - Required</p>
+
+<pre><code>- The connection attributes are the setting parameters for the data models to create the waterline.
+</code></pre>
+
+<p><em>Methods</em> - Optional</p>
+
+<pre><code> - The methods attribute allows the injection of functions for virtual methods inside the model. An example of such an injection would something like this: 
+</code></pre>
+
+<p>Methods Example:</p>
+
+<pre><code> var methods = {
+     history: function(){
+     //virtual methods specific to the history model
+     },
+     comments: function(){
+     //virtual methods specific to the comments model
+     }
+};
+</code></pre>
+
+<h2>
+<a id="authors" class="anchor" href="#authors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors</h2>
+
+<ul>
+<li><a href="https://github.com/ptariche">Peter A Tariche</a></li>
+</ul>
+
+<h1>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
+
+<p>MIT</p>
+        </section>
+
+        <footer>
+          Koa-waterline is maintained by <a href="https://github.com/ptariche">ptariche</a><br>
+          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
