@@ -1,41 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-us">
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta charset="UTF-8">
     <title>Koa-waterline by ptariche</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
-
   <body>
-    <div id="container">
-      <div class="inner">
+    <section class="page-header">
+      <h1 class="project-name">Koa-waterline</h1>
+      <h2 class="project-tagline">a middelware for your hose</h2>
+      <a href="https://github.com/ptariche/koa-waterline" class="btn">View on GitHub</a>
+      <a href="https://github.com/ptariche/koa-waterline/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/ptariche/koa-waterline/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
 
-        <header>
-          <h1>Koa-waterline</h1>
-          <h2>a middelware for your hose</h2>
-        </header>
-
-        <section id="downloads" class="clearfix">
-          <a href="https://github.com/ptariche/koa-waterline/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
-          <a href="https://github.com/ptariche/koa-waterline/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
-          <a href="https://github.com/ptariche/koa-waterline" id="view-on-github" class="button"><span>View on GitHub</span></a>
-        </section>
-
-        <hr>
-
-        <section id="main_content">
-          <h1>
+    <section class="main-content">
+      <h1>
 <a id="koa-waterline" class="anchor" href="#koa-waterline" aria-hidden="true"><span class="octicon octicon-link"></span></a>koa-waterline</h1>
 
-<p>Middleware for your hose 
-  <a href="https://npmjs.org/package/koa-waterline"><img src="https://img.shields.io/npm/v/koa-waterline.svg?style=flat-square" alt="NPM version"></a></p>
+<p>Middleware for your hose</p>
+
+<p><a href="https://nodei.co/npm/koa-waterline/"><img src="https://nodei.co/npm/koa-waterline.png?downloads=true&amp;downloadRank=true&amp;stars=true" alt="NPM"></a> <a href="https://nodei.co/npm/koa-waterline/"><img src="https://nodei.co/npm-dl/koa-waterline.png?months=6&amp;height=3" alt="NPM"></a></p>
 
 <pre><code>npm install koa-waterline
 </code></pre>
@@ -51,6 +40,14 @@ function* (){
   var commentCreated = yield ctx._waterline.collections.comments.create({message: message});
   // You can yield to the CRUD waterline functions because they are written as promises.
   console.log(commentCreated);
+}
+
+// OR
+
+function* () {
+  var waterline      = Waterline.init(injection);
+  var message        = 'This is an example';
+  var commentCreated = yield waterline.collections.comments.create({message: message});
 }
 </code></pre>
 
@@ -72,8 +69,8 @@ function* (){
   mongo: {
     adapter: "mongo",
     host: 'localhost',
-    port: '27017', 
-    user: '', 
+    port: '27017',
+    user: '',
     password: '',
     database: 'waterline'
   }
@@ -82,33 +79,31 @@ function* (){
 var adapters= {
   couch: require('sails-couchdb-orm'),
   mongo: require('sails-mongo')
-}; 
+};
 
-var models = { 
-  "models": {
-    "comments": {
-      "adp": "couch",
-      "connection": "couch",
-      "properties": {
-        "archived": {
-            "type": "boolean",
-            "defaultValue": false
-        },
-        "message": {
-            "type": "string"
-        }
+var models = {
+  "comments": {
+    "adp": "couch",
+    "connection": "couch",
+    "properties": {
+      "archived": {
+          "type": "boolean",
+          "defaultValue": false
+      },
+      "message": {
+          "type": "string"
       }
-    },
-    "history": {
-      "adp": "mongo",
-      "connection": "mongo",
-      "properties": {
-        "activity_id": {
-          "type": "number",
-          "enum": [
-              "unique"
-          ]
-        }
+    }
+  },
+  "history": {
+    "adp": "mongo",
+    "connection": "mongo",
+    "properties": {
+      "activity_id": {
+        "type": "number",
+        "enum": [
+            "unique"
+        ]
       }
     }
   }
@@ -116,7 +111,7 @@ var models = {
 
 var injection               = {};
 injection.methods           = false;
-injection.models            = models; 
+injection.models            = models;
 injection.adapters          = adapters;
 injection.connections       = connections
 
@@ -128,12 +123,12 @@ app.use(waterline(injection));
 
 <p><em>Models</em> - Required</p>
 
-<pre><code>- Models must have an adp, connection, and the properties attributes with the same design pattern in the example above. 
+<pre><code>- Models must have an adp, connection, and the properties attributes with the same design pattern in the example above.
 </code></pre>
 
 <p><em>Adapters</em> - Required</p>
 
-<pre><code>- The adapters refer to the connection adapters; this is required and while seeming redundant it is required to run waterline 
+<pre><code>- The adapters refer to the connection adapters; this is required and while seeming redundant it is required to run waterline
 </code></pre>
 
 <p><em>Connections</em> - Required</p>
@@ -143,7 +138,7 @@ app.use(waterline(injection));
 
 <p><em>Methods</em> - Optional</p>
 
-<pre><code> - The methods attribute allows the injection of functions for virtual methods inside the model. An example of such an injection would something like this: 
+<pre><code> - The methods attribute allows the injection of functions for virtual methods inside the model. An example of such an injection would something like this:
 </code></pre>
 
 <p>Methods Example:</p>
@@ -169,15 +164,15 @@ app.use(waterline(injection));
 <a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h1>
 
 <p>MIT</p>
-        </section>
 
-        <footer>
-          Koa-waterline is maintained by <a href="https://github.com/ptariche">ptariche</a><br>
-          This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
-        </footer>
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/ptariche/koa-waterline">Koa-waterline</a> is maintained by <a href="https://github.com/ptariche">ptariche</a>.</span>
 
-        
-      </div>
-    </div>
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
   </body>
 </html>
