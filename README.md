@@ -1,12 +1,7 @@
-# koa-waterline
+# koa-waterline-gowhich
   Middleware for your hose
-  
-  
-[![NPM](https://nodei.co/npm/koa-waterline.png?downloads=true&downloadRank=true&stars=true)](https://nodei.co/npm/koa-waterline/) [![NPM](https://nodei.co/npm-dl/koa-waterline.png?months=6&height=3)](https://nodei.co/npm/koa-waterline/)
 
-
-
-    npm install koa-waterline
+    npm install koa-waterline-gowhich
 
 ## Usage
 
@@ -118,11 +113,7 @@ Methods Example:
          //virtual methods specific to the comments model
          }
     };
-
-## Authors
-
-  - [Peter A Tariche](https://github.com/ptariche)
-
+    
 # License
 
   MIT
